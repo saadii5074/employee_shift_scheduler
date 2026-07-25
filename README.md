@@ -62,3 +62,21 @@ The application generates:
 - Preferred shifts
 - Streamlit dashboard
 - Excel export
+
+## Screenshots
+
+### Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+---
+
+### Generated Schedule
+
+![Schedule](screenshots/schedule.png)
+
+---
+
+### Console Output
+
+![Console](screenshots/terminal_output.png)
