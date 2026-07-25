@@ -54,3 +54,11 @@ The application generates:
 - Weekly employee schedule
 - Employee workload summary
 - CSV export
+
+## Future Improvements
+
+- Employee leave requests
+- Night shift constraints
+- Preferred shifts
+- Streamlit dashboard
+- Excel export

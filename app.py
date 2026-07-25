@@ -38,6 +38,13 @@ print("Employees:", len(employees))
 print("Days:", len(days))
 print("Shifts:", len(shifts))
 
+
+# Employee Leave Requests
+leave_requests = {
+    ("Ali", "Saturday"),
+    ("Ahmed", "Monday"),
+}
+
 # Calculate totals
 total_shift_slots = len(days) * len(shifts) * 2
 total_decision_variables = len(employees) * len(days) * len(shifts)
@@ -93,6 +100,61 @@ print("Constraint 2 Added Successfully")
 
 # -----------------------------
 # Constraint 3
+# Employee Leave Requests
+# -----------------------------
+
+for employee, day in leave_requests:
+
+    for shift in shifts:
+
+        model.Add(
+            work[(employee, day, shift)] == 0
+        )
+
+print("Leave Constraints Added Successfully")
+
+# Employee Leave Requests
+leave_requests = {
+    ("Ali", "Saturday"),
+    ("Ahmed", "Monday"),
+}
+
+# Employee Preferred Shifts (Soft Constraints)
+preferred_shift = {
+    "Ali": "Morning",
+    "Ahmed": "Evening",
+    "Saad": "Night",
+}
+
+# Employee Preferred Shifts (Soft Constraints)
+preferred_shift = {
+    "Ali": "Morning",
+    "Ahmed": "Evening",
+    "Saad": "Night",
+}
+
+
+# -----------------------------
+# Constraint 4
+# No Morning Shift After Night Shift
+# -----------------------------
+
+for e in employees:
+    for i in range(len(days) - 1):
+
+        today = days[i]
+        tomorrow = days[i + 1]
+
+        model.Add(
+            work[(e, today, "Night")] +
+            work[(e, tomorrow, "Morning")] <= 1
+        )
+
+print("Night Shift Constraint Added Successfully")
+
+
+# -----------------------------
+# Constraint 3
 # Fair workload
 # -----------------------------
 
@@ -109,6 +171,22 @@ for e in employees:
 
 print("Constraint 3 Added Successfully")
 
+# -----------------------------
+# Objective Function
+# Maximize Preferred Shifts
+# -----------------------------
+
+objective_terms = []
+
+for employee, preferred in preferred_shift.items():
+    for day in days:
+        objective_terms.append(
+            work[(employee, day, preferred)]
+        )
+
+model.Maximize(sum(objective_terms))
+
+print("Objective Function Added Successfully")
 
 # -----------------------------
 # Solve Model
